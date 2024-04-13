@@ -4,7 +4,6 @@ import random
 
 class SudokuGenerator:
     def __init__(self, row_length: int, removed_cells: int):
-        self.board_solutions = None
         self.removed_cells = removed_cells
         self.row_length = row_length
         self.board = [[0] * self.row_length for i in range(row_length)]  # initializes board to be generated
@@ -54,11 +53,11 @@ class SudokuGenerator:
                 return True
 
     def fill_box(self, row_start, col_start):
-        lib = [i for i in range(1, 10)]
+        lib = [i for i in range(1, 10)]  # shuffles the library, effectively making placement random
         random.shuffle(lib)
         for row in range(row_start, row_start + 3):
             for col in range(col_start, col_start + 3):
-                self.board[row][col] = lib.pop(0)
+                self.board[row][col] = lib.pop(0)  # iterates through the boss and turns it into a number
         pass
 
     def fill_diagonal(self):
@@ -95,8 +94,7 @@ class SudokuGenerator:
     def fill_values(self):  # fill the all the boxes
         self.fill_diagonal()
         self.fill_remaining(0, self.box_length)
-        self.board_solutions = self.board
-        return self.board_solutions
+        pass
 
     def remove_cells(self):
         counter = self.removed_cells
@@ -111,19 +109,12 @@ class SudokuGenerator:
 
 
 def generate_sudoku(size, removed):
-    random.seed(2)
     sudoku = SudokuGenerator(size, removed)
     sudoku.fill_values()
-    board = sudoku.get_board()
+    board_solution = sudoku.get_board()
     sudoku.remove_cells()
     board = sudoku.get_board()
-    sudoku.print_board()  # not supposed to be here but used for debugging purposes
     return board
 
 
-test = SudokuGenerator(9, 0)
-print("--------------------------------")
-test.fill_diagonal()
-test.fill_remaining(0, 3)
-print(test.valid_in_box(0, 6, 2))
-test.print_board()
+generated = generate_sudoku(9, 0)
