@@ -4,6 +4,7 @@ import random
 
 class SudokuGenerator:
     def __init__(self, row_length: int, removed_cells: int):
+        self.board_solutions = None
         self.removed_cells = removed_cells
         self.row_length = row_length
         self.board = [[0] * self.row_length for i in range(row_length)]  # initializes board to be generated
@@ -20,43 +21,45 @@ class SudokuGenerator:
 
     def valid_in_row(self, row, num):  # returns True is num is in a row already
         if num in self.board[row]:
-            return True
-        else:
             return False
+        else:
+            return True
 
     def valid_in_col(self, col, num):  # returns True if num is in a column already
         for row in self.board:
             if num == row[col]:
-                return True
+                return False
         else:
-            return False
+            return True
 
     def valid_in_box(self, row_start, col_start, num):
         for row in self.board[row_start:row_start + 3]:  # splices the first 2D lists (or box) in the active board
             for col in row[col_start:col_start + 3]:  # splices the first three elements inside the list to create box
                 if num == col:  # if the inputted number is equal to any number for col, it will return True
-                    return True
+                    return False
         else:
-            return False  # returns false, indicating the number is not inside the box
+            return True  # returns false, indicating the number is not inside the box
 
     def is_valid(self, row, col, num):
-        if self.valid_in_row(row, num):
+        if not self.valid_in_row(row, num):
             return False
         else:
-            if self.valid_in_col(col, num):
+            if not self.valid_in_col(col, num):
                 return False
             else:
-                if self.valid_in_box(row, col, num):
+                row = row // 3 * 3
+                col = col // 3 * 3
+                if not self.valid_in_box(row, col, num):
                     return False
                 return True
 
     def fill_box(self, row_start, col_start):
-        lib = [i for i in range(1, 10)]  # gives numbers 1-9 to fill in the boxes each time it's called (useful later)
-        for i in range(row_start, row_start + 3):  # used index to directly update the instance of self.board
-            for j in range(col_start, col_start + 3):  # another index that's used to update current instance
-                self.board[i][j] = random.choice(lib)  # using random import, a number is randomly choice from the lib,
-                lib.remove(self.board[i][j])  # assigning a random number to that position in self.board and gets
-        pass  # removed after being assigned
+        lib = [i for i in range(1, 10)]
+        random.shuffle(lib)
+        for row in range(row_start, row_start + 3):
+            for col in range(col_start, col_start + 3):
+                self.board[row][col] = lib.pop(0)
+        pass
 
     def fill_diagonal(self):
         for i in range(0, 7, 3):
@@ -108,6 +111,7 @@ class SudokuGenerator:
 
 
 def generate_sudoku(size, removed):
+    random.seed(2)
     sudoku = SudokuGenerator(size, removed)
     sudoku.fill_values()
     board = sudoku.get_board()
@@ -117,4 +121,9 @@ def generate_sudoku(size, removed):
     return board
 
 
-generate_sudoku(9, 0)
+test = SudokuGenerator(9, 0)
+print("--------------------------------")
+test.fill_diagonal()
+test.fill_remaining(0, 3)
+print(test.valid_in_box(0, 6, 2))
+test.print_board()
