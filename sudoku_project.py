@@ -113,7 +113,7 @@ def generate_sudoku(size, removed):
     board = sudoku.get_board()
     sudoku.remove_cells()
     board = sudoku.get_board()
-    sudoku.print_board()
+    sudoku.print_board()  # not supposed to be here but used for debugging purposes
     return board
 
 
