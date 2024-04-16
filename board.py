@@ -13,6 +13,7 @@ class Board:
         self.selected_cell = None
         #self.remove_cells()
 
+
     # def initialize_board():
     #     # 1st approach
     #     return [["-" for i in range(3)] for j in range(3)]
