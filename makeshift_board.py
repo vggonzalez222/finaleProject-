@@ -75,15 +75,6 @@ class Board:
                     pygame.quit()
                     sys.exit()
 
-
-
-
-
-
-
-
-
-
     def select(self, row, col):
         if None is row or None is col:
             return None
@@ -195,6 +186,8 @@ while True:
     test.draw()
     test.action_rects()
     test.update_board()
+    if test.check_board():
+        True
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
