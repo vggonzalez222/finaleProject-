@@ -168,7 +168,9 @@ class Board:
         if not self.is_full():
             return self.find_empty()
         elif self.is_full():
+            # pygame.time.wait(5000)
             if self.player_board == self.solution_board:
                 return True
             else:
                 return False
+        
