@@ -19,8 +19,8 @@ def main():
             new_game = True
             pygame.display.flip()
         test.update_board()
-        if test.check_board():
-            True
+        if type(test.check_board()) != tuple:
+            print("test")
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
