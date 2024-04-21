@@ -2,6 +2,7 @@ import pygame
 import sys
 from makeshift_cell import Cell
 from makeshift_sudoku_project import generate_sudoku
+from welcome_screen import welcome_screen
 
 
 class Board:
@@ -39,36 +40,36 @@ class Board:
         reset_rect = pygame.Rect(self.width / 8, self.height + self.height / 100, self.width / 6, self.height / 11)
         coords0 = reset_font.get_rect()
         coords0.center = reset_rect.center
-        pygame.draw.rect(self.screen, (194, 131, 21), reset_rect)
+        pygame.draw.rect(self.screen, (194, 131, 21), reset_rect, 0, 50)
         self.screen.blit(reset_font, coords0)
         restart_font = font.render("RESTART", True, (255, 255, 255))
         restart_rect = pygame.Rect(self.width / 2.5, self.height + self.height / 100, self.width / 6, self.height / 11)
         coords1 = restart_font.get_rect()
         coords1.center = restart_rect.center
-        pygame.draw.rect(self.screen, (194, 131, 21), restart_rect)
+        pygame.draw.rect(self.screen, (194, 131, 21), restart_rect, 0, 50)
         self.screen.blit(restart_font, coords1)
         exit_font = font.render("EXIT", True, (255, 255, 255))
         exit_rect = pygame.Rect(self.width / 1.5, self.height + self.height / 100, self.width / 6, self.height / 11)
         coords2 = exit_font.get_rect()
         coords2.center = exit_rect.center
-        pygame.draw.rect(self.screen, (194, 131, 21), exit_rect)
+        pygame.draw.rect(self.screen, (194, 131, 21), exit_rect, 0, 50)
         self.screen.blit(exit_font, coords2)
         if reset_rect.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.screen, (255, 196, 84), reset_rect)
+            pygame.draw.rect(self.screen, (255, 196, 84), reset_rect, 0, 50)
             self.screen.blit(reset_font, coords0)
             for events in pygame.event.get():
                 if events.type == pygame.MOUSEBUTTONDOWN:
                     self.reset_to_original()
                     break
         elif restart_rect.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.screen, (255, 196, 84), restart_rect)
+            pygame.draw.rect(self.screen, (255, 196, 84), restart_rect, 0, 50)
             self.screen.blit(restart_font, coords1)
             for events in pygame.event.get():
                 if events.type == pygame.MOUSEBUTTONDOWN:
-                    print("new screen")
-                    break
+                    welcome_screen()
+                    return True
         elif exit_rect.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.screen, (255, 196, 84), exit_rect)
+            pygame.draw.rect(self.screen, (255, 196, 84), exit_rect, 0, 50)
             self.screen.blit(exit_font, coords2)
             for events in pygame.event.get():
                 if events.type == pygame.MOUSEBUTTONDOWN:
@@ -171,53 +172,3 @@ class Board:
                 return True
             else:
                 return False
-
-
-BG_COLOR = (164, 206, 224)
-welcome_screen = pygame.display.set_mode((800, 800))
-welcome_screen.fill(BG_COLOR)
-screen1 = pygame.display.set_mode((800, 800))
-pygame.display.set_caption("Sudoku")
-test = Board(800, 720, screen1, "easy")
-
-
-while True:
-    screen1.fill(BG_COLOR)
-    test.draw()
-    test.action_rects()
-    test.update_board()
-    if test.check_board():
-        True
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            x2, y2 = event.pos
-            loc1, loc2 = test.click(x2, y2)
-            test.select(loc2, loc1)
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                x0, y0 = test.get_cell_pos()
-                test.select(x0 - 1, y0)
-            elif event.key == pygame.K_DOWN:
-                x0, y0 = test.get_cell_pos()
-                test.select(x0 + 1, y0)
-            elif event.key == pygame.K_LEFT:
-                x0, y0 = test.get_cell_pos()
-                test.select(x0, y0 - 1)
-            elif event.key == pygame.K_RIGHT:
-                x0, y0 = test.get_cell_pos()
-                test.select(x0, y0 + 1)
-            elif event.key == pygame.K_BACKSPACE:
-                test.sketch(None)
-                test.clear()
-            elif event.key == pygame.K_DELETE:
-                test.sketch(None)
-            elif event.key == event.key == pygame.K_RETURN:
-                test.place_number()
-            elif chr(event.key) in [str(i) for i in range(1, 10)]:
-                test.sketch(chr(event.key))
-            else:
-                continue
-    pygame.display.update()
