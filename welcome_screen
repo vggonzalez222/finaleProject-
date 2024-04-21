@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Sudoku")
 
 
-def game_start():
+def welcome_screen():
 
     # Loads in background image
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -105,3 +105,7 @@ def game_start():
 
                 if hard_rect_outline.collidepoint(event.pos):
                     return 'hard'
+
+        pygame.display.update()
+
+welcome_screen()
