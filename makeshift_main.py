@@ -9,9 +9,9 @@ def main():
     while True:
         if new_game:
             BG_COLOR = (164, 206, 224)
-            screen1 = pygame.display.set_mode((800, 800))
+            screen1 = pygame.display.set_mode((200, 200))
             pygame.display.set_caption("Sudoku")
-            test = Board(800, 720, screen1, welcome_screen())
+            test = Board(597, 550, screen1, welcome_screen()) # I change the width: 800 and height: 720
             new_game = False
         screen1.fill(BG_COLOR)
         test.draw()

@@ -14,8 +14,10 @@ def welcome_screen():
 
     # Loads in background image
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    background = pygame.image.load("background.jpg")
+    background = pygame.image.load("background.jpeg")
+    #background = BLACK
     screen.blit(background, (-30,-20))
+    # screen.blit(background, (30,20))
     pygame.display.update()
 
     # Font sizes
@@ -99,6 +101,7 @@ def welcome_screen():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_rect_outline.collidepoint(event.pos):
                     return 'easy'
+
 
                 if medium_rect_outline.collidepoint(event.pos):
                     return 'medium'
