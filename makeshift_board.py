@@ -168,10 +168,13 @@ class Board:
         if not self.is_full():
             return self.find_empty()
         elif self.is_full():
+            pygame.display.update()
             if self.player_board == self.solution_board:
+                pygame.time.delay(500)
                 game_win_screen()
                 return True
             else:
+                pygame.time.delay(500)
                 game_over_screen()
                 return False
         
