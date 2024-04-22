@@ -13,7 +13,7 @@ class Board:
         self.screen = screen
         self.difficulty = difficulty
         removal = {"easy": 30, "medium": 40, "hard": 50}
-        self.original_board, self.solution_board = generate_sudoku(9, 1)
+        self.original_board, self.solution_board = generate_sudoku(9, removal[difficulty])
         self.player_board = [row[:] for row in self.original_board]
         self.cells = [[Cell(self.original_board[i][j], i, j, screen) for j in range(9)] for i in range(9)]
 
