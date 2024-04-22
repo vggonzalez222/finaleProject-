@@ -3,7 +3,7 @@ import sys
 from makeshift_cell import Cell
 from makeshift_sudoku_project import generate_sudoku
 from welcome_screen import welcome_screen
-
+from screens import game_win_screen, game_over_screen
 
 class Board:
 
@@ -13,7 +13,7 @@ class Board:
         self.screen = screen
         self.difficulty = difficulty
         removal = {"easy": 30, "medium": 40, "hard": 50}
-        self.original_board, self.solution_board = generate_sudoku(9, removal[difficulty])
+        self.original_board, self.solution_board = generate_sudoku(9, 1)
         self.player_board = [row[:] for row in self.original_board]
         self.cells = [[Cell(self.original_board[i][j], i, j, screen) for j in range(9)] for i in range(9)]
 
@@ -33,9 +33,9 @@ class Board:
                 cell_height = self.height / 9
                 cell.draw(cell_width, cell_height)
 
-    def action_rects(self):  # ngl I was too tired to properly format those boxes, they're functional tho
+    def action_rects(self):
         pygame.font.init()
-        font = pygame.font.SysFont("roboto", 35)
+        font = pygame.font.SysFont("roboto", 30)
         reset_font = font.render("RESET", True, (255, 255, 255))
         reset_rect = pygame.Rect(self.width / 8, self.height + self.height / 100, self.width / 6, self.height / 11)
         coords0 = reset_font.get_rect()
@@ -168,9 +168,10 @@ class Board:
         if not self.is_full():
             return self.find_empty()
         elif self.is_full():
-            # pygame.time.wait(5000)
             if self.player_board == self.solution_board:
+                game_win_screen()
                 return True
             else:
+                game_over_screen()
                 return False
         

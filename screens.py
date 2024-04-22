@@ -1,6 +1,7 @@
 from constants import *
 import pygame
 import sys
+from welcome_screen import welcome_screen
 
 
 def game_over_screen():
@@ -44,7 +45,7 @@ def game_over_screen():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
                 if restart_rect.collidepoint(x, y):
-                    return 'restart'
+                    return welcome_screen()
 
 def game_win_screen():
     pygame.init()
