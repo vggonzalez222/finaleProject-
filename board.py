@@ -1,7 +1,7 @@
 import pygame
 import sys
-from makeshift_cell import Cell
-from makeshift_sudoku_project import generate_sudoku
+from cell import Cell
+from sudoku_project import generate_sudoku
 from welcome_screen import welcome_screen
 from screens import game_win_screen, game_over_screen
 
