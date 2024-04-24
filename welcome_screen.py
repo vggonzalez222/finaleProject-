@@ -108,5 +108,3 @@ def welcome_screen():
                     return 'hard'
 
         pygame.display.update()
-
-welcome_screen()
