@@ -1,7 +1,6 @@
-# Will need to be edited based off of visual aesthetics 
-
-WIDTH = 600
-HEIGHT = 600
+# WIDTH + HEIGHT previously at 600, 600
+WIDTH = 800
+HEIGHT = 800
 LINE_WIDTH = 10
 SQUARE_SIZE = WIDTH/9
 WIN_LINE_WIDTH = 15
