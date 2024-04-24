@@ -1,4 +1,4 @@
-from makeshift_board import Board
+from board import Board
 from welcome_screen import welcome_screen
 import pygame
 import sys
